@@ -1,0 +1,12 @@
+#!/bin/bash
+
+names=("Adarsh" "Ankit" "Amresh" "Ritesh" "Anmol" "Adarsh" "Yogesh" "Adarsh")
+
+for name in "${names[@]}"
+do
+    if [ "$name" == "Adarsh" ]; then
+        echo "Hii $name"
+    else
+        echo "Hello $name"
+    fi
+done

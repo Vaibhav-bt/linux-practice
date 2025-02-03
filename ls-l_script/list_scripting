@@ -1,0 +1,7 @@
+#!/bin/bash
+for file in *; do
+  if [ -e "$file" ]; then
+    size=$(stat -c %s "$file")
+    echo "Name: $file, Size: $size bytes"
+  fi
+done

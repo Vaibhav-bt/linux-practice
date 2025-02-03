@@ -1,0 +1,51 @@
+#!/bin/bash
+
+data_file="name"
+
+if [ -z "$1" ] && [ -z "$2" ]; then
+  echo "Usage: $0 <First Name> <Field (Mobile | Email | State | Age)>"
+  exit 1
+fi
+
+if [ -z "$2" ]; then
+  name=$1
+  
+  result=$(grep -i "$name" "$data_file" | awk -F '|' '{print "First Name: " $1 "\nEmail: " $2 "\nMobile: " $3 "\nState: " $4 "\nAge: " $5}' | sed 's/ //g')
+
+  if [ -z "$result" ]; then
+    echo "No record found for $name"
+  else
+    echo -e "$result"
+  fi
+  exit 0
+fi
+
+name=$1
+field=$2
+
+case $field in
+  Mobile)
+    col=3
+    ;;
+  Email)
+    col=2
+    ;;
+  State)
+    col=4
+    ;;
+  Age)
+    col=5
+    ;;
+  *)
+    echo "Invalid field! Choose from Mobile, Email, State, Age."
+    exit 1
+    ;;
+esac
+
+result=$(grep -i "$name" "$data_file" | awk -F '|' -v col="$col" '{print $col}' | sed 's/ //g')
+
+if [ -z "$result" ]; then
+  echo "No record found for $name"
+else
+  echo "$field for $name: $result"
+fi
